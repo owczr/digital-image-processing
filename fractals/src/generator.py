@@ -21,11 +21,11 @@ def run():
         coordinates = np.matmul(coordinates, affine.transformation)
         print(coordinates)
 
-        # Increment calculated coordinates
-        coordinates += 1
-
         # Set last element as 1
         coordinates[-1] = 1
+
+        # Increment x and y coordinates
+        coordinates[:-1] += 1
 
         # Get x and y
         x, y, _ = coordinates
