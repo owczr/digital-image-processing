@@ -4,6 +4,7 @@ import numpy as np
 
 
 def load_image(path):
+    """Load image to numpy array"""
     image = Image.open(path)
 
     image_array = np.asarray(image)
@@ -12,7 +13,11 @@ def load_image(path):
 
 
 def is_rgb(image):
-    return len(image.shape) == 3
+    return len(image.shape) == 3 and image.shape[-1] == 3
+
+
+def is_greyscale(image):
+    return len(image.shape) == 2
 
 
 def is_near_boundary(x, y, image_array):
