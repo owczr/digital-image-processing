@@ -1,27 +1,32 @@
 import numpy as np
-from scipy.signal import convolve2d
 
 from .operators import Kirsch
-from .utils import is_rgb, is_near_boundary
+from .utils import is_rgb, is_greyscale, is_near_boundary
 
-
-# FIXME: Filtrated images seem distorted
 
 def filtrate_image(image_array):
+    # Create object with kirsch operators
     kirsch = Kirsch()
 
+    # Define array to store kirsch responses
     filtration = np.zeros_like(image_array)
 
     if is_rgb(image_array):
         return filtrate_rgb(image_array, kirsch, filtration)
-    return filtrate_greyscale(image_array, kirsch, filtration)
+    elif is_greyscale(image_array):
+        return filtrate_greyscale(image_array, kirsch, filtration)
+    else:
+        raise ValueError("Unsupported number of channels")
 
 
 def filtrate_greyscale(image_array, kirsch, filtration):
+    # Pad image with symmetric boundary
     image_array = add_symmetric_boundary(image_array)
 
+    # Get all indexes
     pixels = np.ndindex(image_array.shape[0], image_array.shape[1])
 
+    # Loop over all pixels and calculate convolution with kirsch operators
     for y, x in pixels:
         if is_near_boundary(x, y, image_array):
             continue
@@ -34,34 +39,37 @@ def filtrate_greyscale(image_array, kirsch, filtration):
 
 
 def filtrate_rgb(image_rgb, kirsch, filtration):
+    # Get number of channels
     channels = image_rgb.shape[2]
 
+    # Loop over all channels and apply greyscale filtration
     for channel in range(channels):
         image_array = image_rgb[:, :, channel]
-        image_array = add_symmetric_boundary(image_array)
-
-        pixels = np.ndindex(image_array.shape[0], image_array.shape[1])
-
-        for y, x in pixels:
-            if is_near_boundary(x, y, image_array):
-                continue
-
-            kirsch_response = calculate_kirsch_responses(x, y, image_array, kirsch)
-
-            filtration[y][x][channel] = kirsch_response
+        filtration_grey = np.zeros_like(image_array)
+        filtration[:, :, channel] = filtrate_greyscale(image_array, kirsch, filtration_grey)
 
     return filtration
 
 
 def calculate_kirsch_responses(x, y, image_array, kirsch):
+    """Loops over all kirsch operators, calculates convolution and returns maximum"""
     kirsch_responses = []
 
     for operator in kirsch.operators:
         patch = image_array[y - 1: y + 2, x - 1: x + 2]
-        kirsch_response = np.max(convolve2d(patch, operator, mode='same'))
+        kirsch_response = convolve(operator, patch)
         kirsch_responses.append(kirsch_response)
 
-    return sum(kirsch_responses)
+    return np.max(kirsch_responses)
+
+
+def convolve(operator, image_array):
+    response = 0
+    for i in range(3):
+        for j in range(3):
+            response += operator[j][i] * image_array[j][i]
+
+    return response
 
 
 def add_symmetric_boundary(image_array):
