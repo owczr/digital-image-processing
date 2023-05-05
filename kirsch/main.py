@@ -1,19 +1,21 @@
-import matplotlib.pyplot as plt
+import click
 
 from src.filtration import filtrate_image
 from src.utils import load_image
-
-IMAGE_PATH = "static/cameraman.tif"
-# IMAGE_PATH = "static/peppers.png"
+from src.plots import plot_before_and_after
 
 
-def run():
-    image_array = load_image(IMAGE_PATH)
+@click.command()
+@click.option("--path", "-p", type=click.STRING, help="Path to image")
+def run(path):
+    # Load image to array
+    image_array = load_image(path)
 
+    # Filtrate the image
     filtration = filtrate_image(image_array)
 
-    plt.imshow(filtration, cmap="gray")
-    plt.show()
+    # Plot results
+    plot_before_and_after(image_array, filtration)
 
 
 if __name__ == "__main__":
