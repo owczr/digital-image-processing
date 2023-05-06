@@ -12,13 +12,19 @@ Or from `requirements.txt`
 conda create -n digital-image -f requirements.txt
 ```
 ## Fractals
-This program generates a fractal using affine transformations. <br>
-It uses `turtle` package for drawing of each point. <br>
-- `generator.py` is the main loop which calculates and draws coordinates. <br>
+This program generates a fractal using affine transformations from image or draws points. <br>
+- `drawing.py` - It uses `turtle` package for drawing of each point.
+- `generator.py` - generates a fractal from specified image. 
+- `plots.py` - plot for generated fractal.
 - `transformations.py` is the Affine Transformation class which has 4 transformation matrices and a method to get each matrix randomly.
+- `utils.py` - function to load image and `MAX_ITERATIONS` constant.
 <br>
 
-To run this program use
+To generate fractal from an image:
+```bash
+python fractals/main.py --path <path to image>
+```
+To draw each point in a loop:
 ```bash
 python fractals/main.py
 ```
