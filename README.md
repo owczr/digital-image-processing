@@ -39,5 +39,16 @@ Tu run the program use
 ```bash
 python kirsch/main.py --path <path to image>
 ```
+## Closing
+This program performs binary on greyscale closing on input image.
+- `closing` - inside this package there are `binary` and `mono` morphology functions
+- `element.py` - here is class with structural element
+- `plots.py` - here is a function for plotting results
+- `utils.py` - functions to load an image and check it's type
 
+To run this program you must specify `path`. You can specify `radius` for the structural element otherwise 
+pragram will use default value of 5.
+```bash
+python closing/main.py --path <path to image> --radius <radius>
+```
 
