@@ -1,20 +1,28 @@
-import turtle
-
 import numpy as np
 
 from .transformations import AffineTransformation
+from .utils import load_image, MAX_ITERATIONS
 
-MAX_ITERATIONS = 11000
 
+def generate(path):
+    # Load image and shape
+    image = load_image(path)
+    height, width = image.shape[:2]
 
-def run():
-    pen = create_pen()
+    # Define matrix to store calculated points
+    fractal = np.zeros((height, width))
+
+    # Create object with affine transformations
     affine = AffineTransformation()
-    coordinates = np.array([0, 0, 1])
+
+    # Set starting coordinates
+    x = np.random.randint(0, width)
+    y = np.random.randint(0, height)
+    coordinates = np.array([x, y, 1])
 
     for n in range(MAX_ITERATIONS):
         # Calculate new coordinates
-        coordinates = np.matmul(coordinates, affine.transformation)
+        coordinates = np.matmul(affine.transformation, coordinates)
 
         # Set last element as 1
         coordinates[-1] = 1
@@ -25,21 +33,24 @@ def run():
         # Get x and y
         x, y, _ = coordinates
 
+        # Scale and center x and y
+        x *= 20 * x + width / 2
+        y *= 20 * y + height / 2
+
+        # Cast to integers
+        x, y = int(x), int(y)
+
+        # Check bounding box
+        if x < 0 or x >= width or y < 0 or y >= height:
+            continue
+
         # Draw the point
-        draw_point(pen, x, y)
+        fractal[y, x] += 1
+
+    fractal = scale_fractal(fractal)
+
+    return fractal
 
 
-def create_pen():
-    pen = turtle.Turtle()
-    pen.speed(0)
-    pen.color("green")
-    pen.penup()
-
-    return pen
-
-
-def draw_point(pen, x, y):
-    pen.goto(4 * 65 * x, 4 * 37 * y - 252)  # scale the fern
-    pen.pendown()
-    pen.dot(3)
-    pen.penup()
+def scale_fractal(fractal):
+    return (fractal - np.min(fractal)) * 255 / np.max(fractal)
