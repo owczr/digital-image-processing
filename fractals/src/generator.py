@@ -26,10 +26,6 @@ def generate_fractal(points, height, width):
         # Cast to integers
         x, y = int(x), int(y)
 
-        # # Check bounding box
-        # if x < 0 or x >= width or y < 0 or y >= height:
-        #     continue
-
         # Draw the point
         fractal[y, x] += 1
 
