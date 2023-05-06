@@ -9,10 +9,16 @@ def generate(path):
     image = load_image(path)
     height, width = image.shape[:2]
 
+    # Generate fractal points
     fractal_points = generate_points(height, width)
+
+    # Center fractal points
     fractal_points = center(fractal_points, height, width)
+
+    # Scale fractal points to fill all image space
     fractal_points = scale(fractal_points, height, width)
 
+    # Create fractal matrix
     fractal = generate_fractal(fractal_points, height, width)
 
     return fractal
