@@ -18,13 +18,17 @@ from src.plots import image_and_heatmap
               help="Name of the output image, default is \"map\"")
 @click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
 def main(path, x, y, radius, output, name, plot):
+    # Load image to array
     binary_image = load_binary_image(path)
 
+    # Create geodetic map of distances
     geodetic_map = create_geodetic_map(binary_image, (x, y), radius)
 
+    # Plot results
     if plot:
         image_and_heatmap(binary_image, geodetic_map, (x, y))
 
+    # Save the image
     if output is None:
         output = os.path.dirname(path)
 

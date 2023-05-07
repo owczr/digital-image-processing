@@ -17,16 +17,20 @@ from src.utils import load_image, save_image, is_binary
               help="Name of the output image, default is \"closed\"")
 @click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
 def run(path, radius, output, name, plot):
+    # Load the image to array
     image = load_image(path)
 
+    # Perform closing according to image type
     if is_binary(image):
         image_closed = binary.closing(image, radius)
     else:
         image_closed = mono.closing(image, radius)
 
+    # Plot results
     if plot:
         plot_input_and_closed(image, image_closed)
 
+    # Save the image
     if output is None:
         output = os.path.dirname(path)
 

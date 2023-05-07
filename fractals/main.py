@@ -17,15 +17,19 @@ from src.utils import save_image
               help="Name of the output image, default is \"fractal\"")
 @click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
 def run(path, output, name, plot):
+    # Draw the fractal if path is not specified
     if path is None:
         draw()
         return
 
+    # Generate the fractal
     fractal = generate(path)
 
+    # Plot results
     if plot:
         plot_fractal(fractal)
 
+    # Save the image
     if output is None:
         output = os.path.dirname(path)
 
