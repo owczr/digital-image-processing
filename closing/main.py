@@ -15,7 +15,8 @@ from src.utils import load_image, save_image, is_binary
               help="Output path, if none image will be saved in the same directory as input image")
 @click.option("--name", "-n", type=click.STRING, default="closed",
               help="Name of the output image, default is \"closed\"")
-def run(path, radius, output, name):
+@click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
+def run(path, radius, output, name, plot):
     image = load_image(path)
 
     if is_binary(image):
@@ -23,7 +24,8 @@ def run(path, radius, output, name):
     else:
         image_closed = mono.closing(image, radius)
 
-    plot_input_and_closed(image, image_closed)
+    if plot:
+        plot_input_and_closed(image, image_closed)
 
     if output is None:
         output = os.path.dirname(path)

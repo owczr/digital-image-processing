@@ -15,13 +15,16 @@ from src.utils import save_image
               help="Output path, if none image will be saved in the same directory as input image")
 @click.option("--name", "-n", type=click.STRING, default="fractal",
               help="Name of the output image, default is \"fractal\"")
-def run(path, output, name):
+@click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
+def run(path, output, name, plot):
     if path is None:
         draw()
         return
 
     fractal = generate(path)
-    plot_fractal(fractal)
+
+    if plot:
+        plot_fractal(fractal)
 
     if output is None:
         output = os.path.dirname(path)

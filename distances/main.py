@@ -16,12 +16,14 @@ from src.plots import image_and_heatmap
               help="Output path, if none image will be saved in the same directory as input image")
 @click.option("--name", "-n", type=click.STRING, default="map",
               help="Name of the output image, default is \"map\"")
-def main(path, x, y, radius, output, name):
+@click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
+def main(path, x, y, radius, output, name, plot):
     binary_image = load_binary_image(path)
 
     geodetic_map = create_geodetic_map(binary_image, (x, y), radius)
 
-    image_and_heatmap(binary_image, geodetic_map, (x, y))
+    if plot:
+        image_and_heatmap(binary_image, geodetic_map, (x, y))
 
     if output is None:
         output = os.path.dirname(path)

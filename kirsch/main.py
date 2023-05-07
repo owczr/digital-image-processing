@@ -12,7 +12,8 @@ from src.plots import plot_before_and_after
               help="Output path, if none image will be saved in the same directory as input image")
 @click.option("--name", "-n", type=click.STRING, default="filtrated",
               help="Name of the output image, default is \"filtrated\"")
-def run(path, output, name):
+@click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
+def run(path, output, name, plot):
     # Load image to array
     image_array = load_image(path)
 
@@ -20,7 +21,8 @@ def run(path, output, name):
     filtration = filtrate_image(image_array)
 
     # Plot results
-    plot_before_and_after(image_array, filtration)
+    if plot:
+        plot_before_and_after(image_array, filtration)
 
     # Save results to file
     if output is None:
