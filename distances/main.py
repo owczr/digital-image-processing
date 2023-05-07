@@ -17,7 +17,7 @@ from src.plots import image_and_heatmap
 @click.option("--name", "-n", type=click.STRING, default="map",
               help="Name of the output image, default is \"map\"")
 @click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
-def main(path, x, y, radius, output, name, plot):
+def run(path, x, y, radius, output, name, plot):
     # Load image to array
     binary_image = load_binary_image(path)
 
