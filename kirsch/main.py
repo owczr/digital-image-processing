@@ -3,7 +3,7 @@ import os
 import click
 
 from kirsch.src.filtration import filtrate_image
-from kirsch.src.utils import load_image, save_image
+from kirsch.src.utils import load_image, save_image, is_rgb
 from kirsch.src.plots import plot_before_and_after
 
 
@@ -33,9 +33,12 @@ def run(path, output, name, plot):
     if output is None:
         output = os.path.dirname(path)
 
-    save_image(filtration[:, :, 0], output, name + "R")
-    save_image(filtration[:, :, 1], output, name + "G")
-    save_image(filtration[:, :, 2], output, name + "B")
+    save_image(filtration, output, name)
+
+    if is_rgb(image_array):
+        save_image(filtration[:, :, 0], output, name + "_R")
+        save_image(filtration[:, :, 1], output, name + "_G")
+        save_image(filtration[:, :, 2], output, name + "_B")
 
 
 if __name__ == "__main__":
