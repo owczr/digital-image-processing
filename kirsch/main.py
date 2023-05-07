@@ -1,9 +1,10 @@
 import os
+
 import click
 
-from .src.filtration import filtrate_image
-from .src.utils import load_image, save_image
-from .src.plots import plot_before_and_after
+from kirsch.src.filtration import filtrate_image
+from kirsch.src.utils import load_image, save_image
+from kirsch.src.plots import plot_before_and_after
 
 
 @click.command()
@@ -32,7 +33,9 @@ def run(path, output, name, plot):
     if output is None:
         output = os.path.dirname(path)
 
-    save_image(filtration, output, name)
+    save_image(filtration[:, :, 0], output, name + "R")
+    save_image(filtration[:, :, 1], output, name + "G")
+    save_image(filtration[:, :, 2], output, name + "B")
 
 
 if __name__ == "__main__":

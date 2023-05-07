@@ -2,10 +2,10 @@ import os
 
 import click
 
-from .src.closing import binary
-from .src.closing import mono
-from .src.plots import plot_input_and_closed
-from .src.utils import load_image, save_image, is_binary
+from closing.src.closing import binary
+from closing.src.closing import mono
+from closing.src.plots import plot_input_and_closed
+from closing.src.utils import load_image, save_image, is_binary
 
 
 @click.command()

@@ -2,9 +2,9 @@ import os
 
 import click
 
-from .src.utils import load_binary_image, save_image
-from .src.geodetic import create_geodetic_map
-from .src.plots import image_and_heatmap
+from distances.src.utils import load_binary_image, save_image
+from distances.src.geodetic import create_geodetic_map
+from distances.src.plots import image_and_heatmap
 
 
 @click.command()

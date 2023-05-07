@@ -2,10 +2,10 @@ import os
 
 import click
 
-from .src.drawing import draw
-from .src.generator import generate
-from .src.plots import plot_fractal
-from .src.utils import save_image
+from fractals.src.drawing import draw
+from fractals.src.generator import generate
+from fractals.src.plots import plot_fractal
+from fractals.src.utils import save_image
 
 
 @click.command()
