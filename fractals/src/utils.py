@@ -4,7 +4,7 @@ from PIL import Image
 import numpy as np
 from matplotlib.image import imsave
 
-MAX_ITERATIONS = 1100000
+MAX_ITERATIONS = 1000000
 
 
 def load_image(path):
