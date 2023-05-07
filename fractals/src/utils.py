@@ -1,6 +1,8 @@
+import os
 from PIL import Image
 
 import numpy as np
+from matplotlib.image import imsave
 
 MAX_ITERATIONS = 1100000
 
@@ -13,3 +15,11 @@ def load_image(path):
 
     return image_array
 
+
+def save_image(image_array, path, name):
+    """Save numpy array as image"""
+    filename = f"{name}.jpg"
+
+    filepath = os.path.join(path, filename)
+
+    imsave(filepath, image_array, cmap="gray")
