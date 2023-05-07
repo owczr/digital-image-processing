@@ -2,10 +2,10 @@ import os
 
 import click
 
-from src.closing import binary
-from src.closing import mono
-from src.plots import plot_input_and_closed
-from src.utils import load_image, save_image, is_binary
+from .src.closing import binary
+from .src.closing import mono
+from .src.plots import plot_input_and_closed
+from .src.utils import load_image, save_image, is_binary
 
 
 @click.command()
@@ -16,6 +16,10 @@ from src.utils import load_image, save_image, is_binary
 @click.option("--name", "-n", type=click.STRING, default="closed",
               help="Name of the output image, default is \"closed\"")
 @click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
+def main(path, radius, output, name, plot):
+    run(path, radius, output, name, plot)
+
+
 def run(path, radius, output, name, plot):
     # Load the image to array
     image = load_image(path)
@@ -38,4 +42,4 @@ def run(path, radius, output, name, plot):
 
 
 if __name__ == "__main__":
-    run()
+    main()

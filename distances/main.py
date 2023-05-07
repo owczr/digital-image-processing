@@ -2,9 +2,9 @@ import os
 
 import click
 
-from src.utils import load_binary_image, save_image
-from src.geodetic import create_geodetic_map
-from src.plots import image_and_heatmap
+from .src.utils import load_binary_image, save_image
+from .src.geodetic import create_geodetic_map
+from .src.plots import image_and_heatmap
 
 
 @click.command()
@@ -17,6 +17,10 @@ from src.plots import image_and_heatmap
 @click.option("--name", "-n", type=click.STRING, default="map",
               help="Name of the output image, default is \"map\"")
 @click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
+def main(path, x, y, radius, output, name, plot):
+    run(path, x, y, radius, output, name, plot)
+
+
 def run(path, x, y, radius, output, name, plot):
     # Load image to array
     binary_image = load_binary_image(path)

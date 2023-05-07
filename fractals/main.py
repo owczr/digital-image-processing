@@ -2,10 +2,10 @@ import os
 
 import click
 
-from src.drawing import draw
-from src.generator import generate
-from src.plots import plot_fractal
-from src.utils import save_image
+from .src.drawing import draw
+from .src.generator import generate
+from .src.plots import plot_fractal
+from .src.utils import save_image
 
 
 @click.command()
@@ -16,6 +16,10 @@ from src.utils import save_image
 @click.option("--name", "-n", type=click.STRING, default="fractal",
               help="Name of the output image, default is \"fractal\"")
 @click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
+def main(path, output, name, plot):
+    run(path, output, name, plot)
+
+
 def run(path, output, name, plot):
     # Draw the fractal if path is not specified
     if path is None:
@@ -37,4 +41,4 @@ def run(path, output, name, plot):
 
 
 if __name__ == "__main__":
-    run()
+    main()

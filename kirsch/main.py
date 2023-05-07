@@ -1,9 +1,9 @@
 import os
 import click
 
-from src.filtration import filtrate_image
-from src.utils import load_image, save_image
-from src.plots import plot_before_and_after
+from .src.filtration import filtrate_image
+from .src.utils import load_image, save_image
+from .src.plots import plot_before_and_after
 
 
 @click.command()
@@ -13,6 +13,10 @@ from src.plots import plot_before_and_after
 @click.option("--name", "-n", type=click.STRING, default="filtrated",
               help="Name of the output image, default is \"filtrated\"")
 @click.option("--plot", type=click.BOOL, default=False, help="Plot results, default: False")
+def main(path, output, name, plot):
+    run(path, output, name, plot)
+
+
 def run(path, output, name, plot):
     # Load image to array
     image_array = load_image(path)
@@ -32,4 +36,4 @@ def run(path, output, name, plot):
 
 
 if __name__ == "__main__":
-    run()
+    main()
