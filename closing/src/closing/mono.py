@@ -47,6 +47,6 @@ def apply_structural_element(image, structure, func):
             patch = image_padded[y:y + structure.shape[0], x:x + structure.shape[1]]
 
             # Apply the structural element
-            output[y, x] = func(patch[structure])
+            output[y, x] = func(patch)
 
     return output

@@ -4,16 +4,14 @@ from PIL import Image
 import numpy as np
 from matplotlib.image import imsave
 
-MAX_ITERATIONS = 1000000
 
-
-def load_image(path):
-    """Load image to numpy array"""
+def load_binary_image(path):
+    """Load image to binary numpy array"""
     image = Image.open(path)
 
     image_array = np.asarray(image)
 
-    return image_array
+    return image_array > 0
 
 
 def save_image(image_array, path, name):
@@ -22,4 +20,4 @@ def save_image(image_array, path, name):
 
     filepath = os.path.join(path, filename)
 
-    imsave(filepath, image_array, cmap="gray")
+    imsave(filepath, image_array, cmap="inferno")

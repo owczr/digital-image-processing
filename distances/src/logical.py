@@ -1,22 +1,6 @@
 import numpy as np
 
-from ..element import StructuralElement
-
-
-def closing(image, radius):
-    structure = create_structural_element(radius)
-
-    # Perform erosion
-    eroded = erosion(image, structure)
-
-    # Perform dilation
-    closed = dilation(eroded, structure)
-
-    return closed
-
-
-def erosion(image, structure):
-    return apply_structural_element(image, structure, np.all)
+from distances.src.element import StructuralElement
 
 
 def dilation(image, structure):
