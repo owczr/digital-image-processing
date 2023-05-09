@@ -16,11 +16,11 @@ def closing(image, radius):
 
 
 def erosion(image, structure):
-    return apply_structural_element(image, structure, np.all)
+    return apply_structural_element(image, structure, np.any)
 
 
 def dilation(image, structure):
-    return apply_structural_element(image, structure, np.any)
+    return apply_structural_element(image, structure, np.all)
 
 
 def create_structural_element(radius):

@@ -13,7 +13,7 @@ def generate(path):
     fractal_points = generate_points(height, width)
 
     # Center fractal points
-    # fractal_points = center(fractal_points, height, width)
+    fractal_points = center(fractal_points, height, width)
 
     # Scale fractal points to fill all image space
     fractal_points = scale(fractal_points, height, width)
@@ -33,7 +33,7 @@ def generate_fractal(points, height, width):
         x, y = int(x), int(y)
 
         # Draw the point
-        fractal[y, x] = 1
+        fractal[y, x] += 1
 
     # Standardize values between 0 and 255
     fractal = standardize(fractal)
@@ -47,7 +47,7 @@ def generate_points(height, width):
 
     # Set starting coordinates
     x = 100  # width // 2
-    y = 200  # height // 2
+    y = 250  # height // 2
     coordinates = np.array([x, y, 1])
 
     fractal_points = []
@@ -112,4 +112,5 @@ def scale(points, width, height):
 
 
 def standardize(fractal):
+    fractal = np.log10(fractal + 1)
     return (fractal - np.min(fractal)) * 255 / np.max(fractal)
